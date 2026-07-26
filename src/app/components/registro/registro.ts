@@ -58,6 +58,8 @@ export class Registro {
       return;
     }
 
+
+    // codigo para registro 
     this.registrado.set(true);
     console.log('Registro:', this.formulario.getRawValue());
   }
