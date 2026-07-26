@@ -32,13 +32,15 @@
         <div class="field">
           <label for="correo">Correo electrónico</label>
           <div class="input-wrap">
-            <span class="input-icon" aria-hidden="true">✉</span>
+            <i class="pi pi-envelope input-icon" aria-hidden="true"></i>
             <input
+              pInputText
               id="correo"
               type="email"
               formControlName="correo"
               autocomplete="email"
               placeholder="nombre@ejemplo.com"
+              [invalid]="formulario.controls.correo.touched && formulario.controls.correo.invalid"
             />
           </div>
           @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
@@ -58,42 +60,45 @@
             <button type="button" class="text-button">¿La olvidaste?</button>
           </div>
           <div class="input-wrap">
-            <span class="input-icon" aria-hidden="true">●</span>
-            <input
-              id="clave"
-              [type]="mostrarClave() ? 'text' : 'password'"
+            <p-password
+              inputId="clave"
               formControlName="clave"
               autocomplete="current-password"
               placeholder="Mínimo 6 caracteres"
+              [feedback]="false"
+              [toggleMask]="true"
+              [invalid]="formulario.controls.clave.touched && formulario.controls.clave.invalid"
             />
-            <button
-              type="button"
-              class="visibility"
-              (click)="mostrarClave.set(!mostrarClave())"
-              [attr.aria-label]="mostrarClave() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
-            >
-              {{ mostrarClave() ? 'Ocultar' : 'Ver' }}
-            </button>
           </div>
           @if (formulario.controls.clave.touched && formulario.controls.clave.invalid) {
             <small class="error">La contraseña debe tener al menos 6 caracteres.</small>
           }
         </div>
 
-        <label class="check">
-          <input type="checkbox" formControlName="recordarme" />
+        <label class="check" for="recordarme">
+          <p-checkbox inputId="recordarme" formControlName="recordarme" [binary]="true" />
           <span>Recordarme en este dispositivo</span>
         </label>
 
-        <button class="primary-button" type="submit" [disabled]="enviando()">
-          {{ enviando() ? 'Validando...' : 'Entrar a mi cuenta' }} <span>→</span>
-        </button>
+        <p-button
+          styleClass="primary-button"
+          type="submit"
+          label="Entrar a mi cuenta"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          [loading]="enviando()"
+          [disabled]="enviando()"
+        />
 
         @if (enviado()) {
-          <p class="success" role="status">¡Bienvenido, {{ nombreUsuario() }}!</p>
+          <p-message
+            styleClass="form-message"
+            severity="success"
+            [text]="'¡Bienvenido, ' + nombreUsuario() + '!'"
+          />
         }
         @if (errorLogin()) {
-          <p class="error api-error" role="alert">{{ errorLogin() }}</p>
+          <p-message styleClass="form-message" severity="error" [text]="errorLogin()" />
         }
       </form>
 

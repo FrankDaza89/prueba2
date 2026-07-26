@@ -2,6 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
 
 interface LoginResponse {
   id: string;
@@ -12,7 +17,15 @@ interface LoginResponse {
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonModule,
+    CheckboxModule,
+    InputTextModule,
+    MessageModule,
+    PasswordModule,
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -23,8 +36,6 @@ export class Login {
   protected readonly enviando = signal(false);
   protected readonly errorLogin = signal('');
   protected readonly nombreUsuario = signal('');
-  protected readonly mostrarClave = signal(false);
-
   protected readonly formulario = new FormGroup({
     correo: new FormControl('', {
       nonNullable: true,

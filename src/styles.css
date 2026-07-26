@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+@import 'primeicons/primeicons.css';
 
 :root {
   color-scheme: light;
@@ -242,8 +243,14 @@ a {
   position: relative;
 }
 
-.input-wrap input {
+.input-wrap .p-inputtext,
+.input-wrap .p-password,
+.input-wrap .p-password-input {
   width: 100%;
+}
+
+.input-wrap .p-inputtext,
+.input-wrap .p-password-input {
   height: 52px;
   padding: 0 48px 0 44px;
   border: 1.5px solid #dfe3ed;
@@ -254,11 +261,13 @@ a {
   transition: border-color 160ms, box-shadow 160ms, background 160ms;
 }
 
-.input-wrap input::placeholder {
+.input-wrap .p-inputtext::placeholder,
+.input-wrap .p-password-input::placeholder {
   color: #abb1c0;
 }
 
-.input-wrap input:focus {
+.input-wrap .p-inputtext:focus,
+.input-wrap .p-password-input:focus {
   border-color: #6667d8;
   background: #fff;
   box-shadow: 0 0 0 4px rgba(102, 103, 216, 0.11);
@@ -275,18 +284,8 @@ a {
   pointer-events: none;
 }
 
-.visibility {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  translate: 0 -50%;
-  padding: 4px;
-  border: 0;
+.input-wrap .p-password-toggle-mask-icon {
   color: #626a7d;
-  background: transparent;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
 }
 
 .error {
@@ -312,11 +311,14 @@ a {
   cursor: pointer;
 }
 
-.check input {
-  width: 16px;
-  height: 16px;
-  margin: 1px 0 0;
-  accent-color: #5659c9;
+.check .p-checkbox {
+  margin-top: 1px;
+}
+
+.check .p-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border-color: #cfd4e1;
 }
 
 .check a {
@@ -324,7 +326,7 @@ a {
   font-weight: 700;
 }
 
-.primary-button {
+.primary-button.p-button {
   width: 100%;
   height: 54px;
   display: flex;
@@ -341,13 +343,13 @@ a {
   transition: translate 160ms, box-shadow 160ms;
 }
 
-.primary-button:hover {
+.primary-button.p-button:hover {
   translate: 0 -2px;
   box-shadow: 0 16px 28px rgba(78, 80, 190, 0.3);
 }
 
-.primary-button span {
-  font-size: 20px;
+.primary-button .p-button-icon {
+  font-size: 14px;
 }
 
 .success {
@@ -358,6 +360,13 @@ a {
   background: #e8faf5;
   font-size: 12px;
   line-height: 1.5;
+}
+
+.form-message.p-message {
+  width: 100%;
+  margin-top: 14px;
+  justify-content: center;
+  font-size: 12px;
 }
 
 .switch-auth {

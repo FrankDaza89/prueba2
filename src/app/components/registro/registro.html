@@ -13,9 +13,9 @@
       </div>
 
       <ul class="benefits">
-        <li><span>✓</span> Proyectos y tareas ilimitadas</li>
-        <li><span>✓</span> Colaboración sencilla con tu equipo</li>
-        <li><span>✓</span> Tus datos siempre protegidos</li>
+        <li><i class="pi pi-check"></i> Proyectos y tareas ilimitadas</li>
+        <li><i class="pi pi-check"></i> Colaboración sencilla con tu equipo</li>
+        <li><i class="pi pi-check"></i> Tus datos siempre protegidos</li>
       </ul>
     </aside>
 
@@ -31,8 +31,16 @@
         <div class="field">
           <label for="nombre">Nombre completo</label>
           <div class="input-wrap">
-            <span class="input-icon" aria-hidden="true">●</span>
-            <input id="nombre" type="text" formControlName="nombre" autocomplete="name" placeholder="Tu nombre" />
+            <i class="pi pi-user input-icon" aria-hidden="true"></i>
+            <input
+              pInputText
+              id="nombre"
+              type="text"
+              formControlName="nombre"
+              autocomplete="name"
+              placeholder="Tu nombre"
+              [invalid]="formulario.controls.nombre.touched && formulario.controls.nombre.invalid"
+            />
           </div>
           @if (formulario.controls.nombre.touched && formulario.controls.nombre.invalid) {
             <small class="error">Escribe al menos 3 caracteres.</small>
@@ -42,13 +50,15 @@
         <div class="field">
           <label for="correo">Correo electrónico</label>
           <div class="input-wrap">
-            <span class="input-icon" aria-hidden="true">✉</span>
+            <i class="pi pi-envelope input-icon" aria-hidden="true"></i>
             <input
+              pInputText
               id="correo"
               type="email"
               formControlName="correo"
               autocomplete="email"
               placeholder="nombre@ejemplo.com"
+              [invalid]="formulario.controls.correo.touched && formulario.controls.correo.invalid"
             />
           </div>
           @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
@@ -60,24 +70,36 @@
           <div class="field">
             <label for="clave">Contraseña</label>
             <div class="input-wrap">
-              <input
-                id="clave"
-                [type]="mostrarClave() ? 'text' : 'password'"
+              <p-password
+                inputId="clave"
                 formControlName="clave"
                 autocomplete="new-password"
                 placeholder="Mínimo 8 caracteres"
+                [feedback]="true"
+                [toggleMask]="true"
+                [invalid]="formulario.controls.clave.touched && formulario.controls.clave.invalid"
+                promptLabel="Escribe una contraseña"
+                weakLabel="Débil"
+                mediumLabel="Media"
+                strongLabel="Fuerte"
               />
             </div>
           </div>
           <div class="field">
             <label for="confirmarClave">Confirmar contraseña</label>
             <div class="input-wrap">
-              <input
-                id="confirmarClave"
-                [type]="mostrarClave() ? 'text' : 'password'"
+              <p-password
+                inputId="confirmarClave"
                 formControlName="confirmarClave"
                 autocomplete="new-password"
                 placeholder="Repite tu contraseña"
+                [feedback]="false"
+                [toggleMask]="true"
+                [invalid]="
+                  formulario.controls.confirmarClave.touched &&
+                  (formulario.controls.confirmarClave.invalid ||
+                    formulario.hasError('clavesDistintas'))
+                "
               />
             </div>
           </div>
@@ -85,30 +107,41 @@
         @if (formulario.controls.clave.touched && formulario.controls.clave.invalid) {
           <small class="error grouped-error">La contraseña debe tener al menos 8 caracteres.</small>
         }
-        @if (
-          formulario.controls.confirmarClave.touched &&
-          formulario.hasError('clavesDistintas')
-        ) {
+        @if (formulario.controls.confirmarClave.touched && formulario.hasError('clavesDistintas')) {
           <small class="error grouped-error">Las contraseñas no coinciden.</small>
         }
 
-        <label class="check">
-          <input type="checkbox" formControlName="terminos" />
-          <span>Acepto los <a href="#" (click)="$event.preventDefault()">términos de uso</a> y la política de privacidad.</span>
+        <label class="check" for="terminos">
+          <p-checkbox inputId="terminos" formControlName="terminos" [binary]="true" />
+          <span>
+            Acepto los
+            <a href="#" (click)="$event.preventDefault()">términos de uso</a>
+            y la política de privacidad.
+          </span>
         </label>
         @if (formulario.controls.terminos.touched && formulario.controls.terminos.invalid) {
           <small class="error grouped-error">Debes aceptar los términos para continuar.</small>
         }
 
-        <button class="primary-button" type="submit" [disabled]="registrando()">
-          {{ registrando() ? 'Creando cuenta...' : 'Crear mi cuenta' }} <span>→</span>
-        </button>
+        <p-button
+          styleClass="primary-button"
+          type="submit"
+          label="Crear mi cuenta"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          [loading]="registrando()"
+          [disabled]="registrando()"
+        />
 
         @if (registrado()) {
-          <p class="success" role="status">¡Cuenta creada correctamente!</p>
+          <p-message
+            styleClass="form-message"
+            severity="success"
+            text="¡Cuenta creada correctamente!"
+          />
         }
         @if (errorRegistro()) {
-          <p class="error api-error" role="alert">{{ errorRegistro() }}</p>
+          <p-message styleClass="form-message" severity="error" [text]="errorRegistro()" />
         }
       </form>
 

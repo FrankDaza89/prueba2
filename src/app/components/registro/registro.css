@@ -21,7 +21,7 @@
   font-size: 13px;
 }
 
-.benefits span {
+.benefits i {
   width: 25px;
   height: 25px;
   display: inline-grid;
@@ -30,6 +30,7 @@
   border-radius: 50%;
   color: #164c52;
   background: #94eed9;
+  font-size: 11px;
   font-weight: 800;
 }
 
@@ -52,7 +53,8 @@
   gap: 14px;
 }
 
-.field-row .input-wrap input {
+.field-row .input-wrap .p-inputtext,
+.field-row .input-wrap .p-password-input {
   padding-left: 15px;
   padding-right: 15px;
 }
