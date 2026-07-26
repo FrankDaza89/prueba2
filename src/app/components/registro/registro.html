@@ -1,0 +1,113 @@
+<main class="auth-page">
+  <section class="auth-card register-card">
+    <aside class="auth-hero register-hero">
+      <a class="brand" routerLink="/login" aria-label="Ir al inicio">
+        <span class="brand-mark">N</span>
+        <span>Nébula</span>
+      </a>
+
+      <div class="hero-copy">
+        <span class="eyebrow">Empieza hoy</span>
+        <h1>Haz espacio para lo que viene.</h1>
+        <p>Una cuenta, todos tus proyectos. Regístrate gratis y lleva tus ideas al siguiente nivel.</p>
+      </div>
+
+      <ul class="benefits">
+        <li><span>✓</span> Proyectos y tareas ilimitadas</li>
+        <li><span>✓</span> Colaboración sencilla con tu equipo</li>
+        <li><span>✓</span> Tus datos siempre protegidos</li>
+      </ul>
+    </aside>
+
+    <div class="auth-form-panel register-panel">
+      <div class="form-heading">
+        <span class="mobile-brand"><span class="brand-mark">N</span> Nébula</span>
+        <p class="eyebrow">Únete a la comunidad</p>
+        <h2>Crea tu cuenta</h2>
+        <p>Solo necesitas un minuto para comenzar.</p>
+      </div>
+
+      <form [formGroup]="formulario" (ngSubmit)="crearCuenta()" novalidate>
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">●</span>
+            <input id="nombre" type="text" formControlName="nombre" autocomplete="name" placeholder="Tu nombre" />
+          </div>
+          @if (formulario.controls.nombre.touched && formulario.controls.nombre.invalid) {
+            <small class="error">Escribe al menos 3 caracteres.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="correo">Correo electrónico</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">✉</span>
+            <input
+              id="correo"
+              type="email"
+              formControlName="correo"
+              autocomplete="email"
+              placeholder="nombre@ejemplo.com"
+            />
+          </div>
+          @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
+            <small class="error">Escribe un correo válido.</small>
+          }
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="clave">Contraseña</label>
+            <div class="input-wrap">
+              <input
+                id="clave"
+                [type]="mostrarClave() ? 'text' : 'password'"
+                formControlName="clave"
+                autocomplete="new-password"
+                placeholder="Mínimo 8 caracteres"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label for="confirmarClave">Confirmar contraseña</label>
+            <div class="input-wrap">
+              <input
+                id="confirmarClave"
+                [type]="mostrarClave() ? 'text' : 'password'"
+                formControlName="confirmarClave"
+                autocomplete="new-password"
+                placeholder="Repite tu contraseña"
+              />
+            </div>
+          </div>
+        </div>
+        @if (formulario.controls.clave.touched && formulario.controls.clave.invalid) {
+          <small class="error grouped-error">La contraseña debe tener al menos 8 caracteres.</small>
+        }
+        @if (
+          formulario.controls.confirmarClave.touched &&
+          formulario.hasError('clavesDistintas')
+        ) {
+          <small class="error grouped-error">Las contraseñas no coinciden.</small>
+        }
+
+        <label class="check">
+          <input type="checkbox" formControlName="terminos" />
+          <span>Acepto los <a href="#" (click)="$event.preventDefault()">términos de uso</a> y la política de privacidad.</span>
+        </label>
+        @if (formulario.controls.terminos.touched && formulario.controls.terminos.invalid) {
+          <small class="error grouped-error">Debes aceptar los términos para continuar.</small>
+        }
+
+        <button class="primary-button" type="submit">Crear mi cuenta <span>→</span></button>
+
+        @if (registrado()) {
+          <p class="success" role="status">¡Cuenta validada! El formulario está listo para conectarse a tu API.</p>
+        }
+      </form>
+
+      <p class="switch-auth">¿Ya tienes una cuenta? <a routerLink="/login">Iniciar sesión</a></p>
+    </div>
+  </section>
+</main>

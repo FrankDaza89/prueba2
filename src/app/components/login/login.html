@@ -1,0 +1,98 @@
+<main class="auth-page">
+  <section class="auth-card">
+    <aside class="auth-hero">
+      <a class="brand" routerLink="/login" aria-label="Ir al inicio">
+        <span class="brand-mark">N</span>
+        <span>Nébula</span>
+      </a>
+
+      <div class="hero-copy">
+        <span class="eyebrow">Tu espacio, a tu manera</span>
+        <h1>Todo empieza con una buena idea.</h1>
+        <p>Organiza tus proyectos, conecta con tu equipo y convierte tus planes en resultados.</p>
+      </div>
+
+      <div class="hero-footer">
+        <span class="avatar-stack">
+          <span>AM</span><span>LC</span><span>+8k</span>
+        </span>
+        <p>Más de 8.000 personas ya construyen con Nébula.</p>
+      </div>
+    </aside>
+
+    <div class="auth-form-panel">
+      <div class="form-heading">
+        <span class="mobile-brand"><span class="brand-mark">N</span> Nébula</span>
+        <p class="eyebrow">Bienvenido de nuevo</p>
+        <h2>Inicia sesión</h2>
+        <p>Ingresa tus datos para continuar a tu cuenta.</p>
+      </div>
+
+      <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()" novalidate>
+        <div class="field">
+          <label for="correo">Correo electrónico</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">✉</span>
+            <input
+              id="correo"
+              type="email"
+              formControlName="correo"
+              autocomplete="email"
+              placeholder="nombre@ejemplo.com"
+            />
+          </div>
+          @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
+            <small class="error">
+              @if (formulario.controls.correo.hasError('required')) {
+                El correo es obligatorio.
+              } @else {
+                Escribe un correo válido.
+              }
+            </small>
+          }
+        </div>
+
+        <div class="field">
+          <div class="label-row">
+            <label for="clave">Contraseña</label>
+            <button type="button" class="text-button">¿La olvidaste?</button>
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">●</span>
+            <input
+              id="clave"
+              [type]="mostrarClave() ? 'text' : 'password'"
+              formControlName="clave"
+              autocomplete="current-password"
+              placeholder="Mínimo 6 caracteres"
+            />
+            <button
+              type="button"
+              class="visibility"
+              (click)="mostrarClave.set(!mostrarClave())"
+              [attr.aria-label]="mostrarClave() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            >
+              {{ mostrarClave() ? 'Ocultar' : 'Ver' }}
+            </button>
+          </div>
+          @if (formulario.controls.clave.touched && formulario.controls.clave.invalid) {
+            <small class="error">La contraseña debe tener al menos 6 caracteres.</small>
+          }
+        </div>
+
+        <label class="check">
+          <input type="checkbox" formControlName="recordarme" />
+          <span>Recordarme en este dispositivo</span>
+        </label>
+
+        <button class="primary-button" type="submit">Entrar a mi cuenta <span>→</span></button>
+
+        @if (enviado()) {
+          <p class="success" role="status">¡Datos válidos! El formulario está listo para conectarse a tu API.</p>
+        }
+      </form>
+
+      <p class="switch-auth">¿Aún no tienes cuenta? <a routerLink="/registro">Crear una cuenta</a></p>
+    </div>
+  </section>
+</main>

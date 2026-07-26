@@ -1,0 +1,20 @@
+/* Estilos exclusivos de la pantalla de inicio de sesión. */
+.auth-hero {
+  background: linear-gradient(145deg, #242267 0%, #4544b9 55%, #5358d9 100%);
+}
+
+.auth-hero::after {
+  background: rgba(42, 211, 178, 0.15);
+}
+
+.avatar-stack span {
+  border-color: #4544b9;
+}
+
+.avatar-stack span:first-child {
+  background: #f18879;
+}
+
+.avatar-stack span:last-child {
+  background: #242267;
+}
