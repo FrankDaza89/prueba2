@@ -85,10 +85,15 @@
           <span>Recordarme en este dispositivo</span>
         </label>
 
-        <button class="primary-button" type="submit">Entrar a mi cuenta <span>→</span></button>
+        <button class="primary-button" type="submit" [disabled]="enviando()">
+          {{ enviando() ? 'Validando...' : 'Entrar a mi cuenta' }} <span>→</span>
+        </button>
 
         @if (enviado()) {
-          <p class="success" role="status">¡Datos válidos! El formulario está listo para conectarse a tu API.</p>
+          <p class="success" role="status">¡Bienvenido, {{ nombreUsuario() }}!</p>
+        }
+        @if (errorLogin()) {
+          <p class="error api-error" role="alert">{{ errorLogin() }}</p>
         }
       </form>
 

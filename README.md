@@ -2,6 +2,34 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.19.
 
+## Solución completa con API de usuarios
+
+La solución se organiza en dos proyectos hermanos:
+
+- `proyectoIA/prueba1`: interfaz Angular servida por Nginx.
+- `proyectoIA/usuario-api`: API REST independiente con Java 17, Spring Boot, Maven, JPA y H2.
+- `POST /api/usuarios`: crea usuarios, valida los datos, evita correos duplicados y cifra las contraseñas con BCrypt.
+
+Primero inicia la API desde `proyectoIA/usuario-api`:
+
+```bash
+docker compose up --build -d
+```
+
+Después inicia el frontend desde `proyectoIA/prueba1` con el mismo comando.
+La interfaz queda disponible en `http://localhost:8080`, y la API en
+`http://localhost:8081/api/usuarios`.
+
+Para desarrollar Angular con `npm start`, deja la API de Docker activa. El
+proxy de desarrollo enviará automáticamente las solicitudes `/api` al puerto
+`8081`.
+
+Para detener cada proyecto, ejecuta desde su carpeta:
+
+```bash
+docker compose stop
+```
+
 ## Development server
 
 To start a local development server, run:

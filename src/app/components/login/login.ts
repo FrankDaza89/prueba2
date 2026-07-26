@@ -1,6 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+
+interface LoginResponse {
+  id: string;
+  nombre: string;
+  correo: string;
+  mensaje: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -9,7 +17,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
+  private readonly http = inject(HttpClient);
+
   protected readonly enviado = signal(false);
+  protected readonly enviando = signal(false);
+  protected readonly errorLogin = signal('');
+  protected readonly nombreUsuario = signal('');
   protected readonly mostrarClave = signal(false);
 
   protected readonly formulario = new FormGroup({
@@ -26,12 +39,27 @@ export class Login {
 
   protected iniciarSesion(): void {
     this.enviado.set(false);
+    this.errorLogin.set('');
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
     }
 
-    this.enviado.set(true);
-    console.log('Inicio de sesión:', this.formulario.getRawValue());
+    const { correo, clave } = this.formulario.getRawValue();
+    this.enviando.set(true);
+
+    this.http.post<LoginResponse>('/api/auth/login', { correo, clave }).subscribe({
+      next: (respuesta) => {
+        this.nombreUsuario.set(respuesta.nombre);
+        this.enviado.set(true);
+        this.enviando.set(false);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.enviando.set(false);
+        this.errorLogin.set(
+          error.error?.mensaje ?? 'No fue posible iniciar sesión. Inténtalo nuevamente.',
+        );
+      },
+    });
   }
 }

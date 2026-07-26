@@ -100,10 +100,15 @@
           <small class="error grouped-error">Debes aceptar los términos para continuar.</small>
         }
 
-        <button class="primary-button" type="submit">Crear mi cuenta <span>→</span></button>
+        <button class="primary-button" type="submit" [disabled]="registrando()">
+          {{ registrando() ? 'Creando cuenta...' : 'Crear mi cuenta' }} <span>→</span>
+        </button>
 
         @if (registrado()) {
-          <p class="success" role="status">¡Cuenta validada! El formulario está listo para conectarse a tu API.</p>
+          <p class="success" role="status">¡Cuenta creada correctamente!</p>
+        }
+        @if (errorRegistro()) {
+          <p class="error api-error" role="alert">{{ errorRegistro() }}</p>
         }
       </form>
 
